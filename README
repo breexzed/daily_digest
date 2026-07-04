@@ -1,0 +1,25 @@
+Just a little project to move from scripting to multi-file systems.
+
+It takes in RSS Feeds as config, transforms it into my data model, use feedparser to extract data from the config, use the datamodel as the source of truth to do some some transformations, basically extraction, cleaning and, raw parsings of text from pyton data structutures, an option to send off data to an llm for futher transformations, pre-processing, and dispatch to telegram.
+
+
+was the project worth the stress? maybe not
+
+did i learn? i sure did.
+
+
+things i learnt:
+
+- don't trust python. it's a snake
+- the machine cannot read your mind
+- know where data flows from and towards in memory, use explicit priming as guide if you must
+-telegram formatting doesnt work(for me?)
+- multi-file programming is way different than what i imagined it as, needs some time to getting used to, i'm still just chopping up my data structure literacy.
+- nested data structures can be a pain in the ass, have a decent mental model
+- function parameterization is beautiful engineering
+- i still don't know how if __name__ ==     "__main__": works yet
+- i still dont know what i'm doing
+- i still love programming
+
+
+breexzed
