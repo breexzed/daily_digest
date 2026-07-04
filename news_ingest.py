@@ -91,7 +91,7 @@ def load_jsonl_to_list(history):
         return [json.loads(line) for line in f if line.strip()]
 
 #function to fetch raw html from links in news_feed
-def fetch_raw_link_content(history_list):
+def fetch_raw_link_content(history_list):                                                           #see you in the future
     link_contents = []
     for link in history_list:
             result = link["latest_feed"]["link"]
@@ -104,7 +104,7 @@ def fetch_raw_link_content(history_list):
 #pprint.pprint(fetch_raw_link_content(history_list))
 
 #function to extract clean text from raw html in link_contents
-def extract_clean_prose_with_meta(history_list, raw_html_payloads):
+def extract_clean_prose_with_meta(history_list, raw_html_payloads):                                            #see you in the future
     content_text = []
     for feed_metadata, raw_html in zip(history_list, raw_html_payloads):
         clean_content = trafilatura.extract(raw_html, output_format="markdown",)
@@ -126,7 +126,7 @@ def extract_clean_prose_with_meta(history_list, raw_html_payloads):
     return content_text
 
 #format clean stories off the list elements (string notations) into raw texts
-def format_cleaned_stories(clean_stories_with_meta):
+def format_cleaned_stories(clean_stories_with_meta):                                                                 #see you in the future
     return "\n" + "\n".join(clean_stories_with_meta)
 
 

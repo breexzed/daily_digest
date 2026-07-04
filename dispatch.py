@@ -48,8 +48,8 @@ def main():
             print("AI flag detected. Routing data model through LLM engine...")
 
             #convert the dict to a string so the llm can read it
-            data_string = str(item)
-            message_text = format_data_model_payload(item)
+            data_string = str(item)     
+            message_text = summarize_article(data_string)
         
         else:
             print("Direct Dispatch. Formatting data model raw payload...")

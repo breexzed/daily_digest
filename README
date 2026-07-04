@@ -20,6 +20,63 @@ things i learnt:
 - i still don't know how if __name__ ==     "__main__": works yet
 - i still dont know what i'm doing
 - i still love programming
+- also softare engineering is basically throwing data around 2d and keeping track of it as it mutates in different environments that is sometimes dictated by you, and other timee, some unseen forces, like really..
+
+edit:  context
+
+as observable from the code (news_ingest.py), in the pipeline_runner function, i commented out the key data transformation process i built this project to learn:
+
+"""
+ #history_list = load_jsonl_to_list(history)
+    #raw_html_payloads = fetch_raw_link_content(history_list)
+    #clean_stories_with_meta = extract_clean_prose_with_meta(history_list, raw_html_payloads)
+    #return clean_stories_with_meta
+"""
+the reason i initially built this way is because i wanted the llm to parse the full article text and be able to use it for whatever transformation it is that i wanted. it worked but there were tradeoffs:
+
+1. extrtacting raw payload from the articles in the feed (using trafilatura) causes network overhead issues because the content that would be extracted is a lot. even though trafilatura is able to help me strip of the hypertext markups of the initial html payload(imagine there wasnt trafilatura), the article's content itslef is signifcant, but honestly its not a big deal if i wanted to actually... but i'm making use of google's free model for this and it's very restrictive.. so i had to drop the llm transformation itself making it an optional flag. "--ai"
+2. Telegram''s text limit is 4096 words, even when the llm was able to parse the text data and transforme it, its output tends to be above telegram text limit (specifically for what i was using it for see prompt.py), so this gave another reason for why to drop it.
+
+so this means currently the "--ai" flag wont work as intended, but in the case that you want it to, just uncomment the code below from news_ingest.py, in the pipelin_runner function:
+"""
+ #history_list = load_jsonl_to_list(history)
+    #raw_html_payloads = fetch_raw_link_content(history_list)
+    #clean_stories_with_meta = extract_clean_prose_with_meta(history_list, raw_html_payloads)
+    #return clean_stories_with_meta
+"""
+
+maybe the next iteration of this project would be to find a solution to this, but telegram's text limit doesnt even make it rewarding. i know we could like maybe break the text into different message streams but, where's the beauty in that?
 
 
-breexzed
+
+
+
+okay i no this is going to sound crazy but here's another edit:
+
+so you know how i'm trying to send thousand of words of world news to the llm to do data transformation for me? it turns out it could neve work and i could just use the headline and description as input for the llm instead, this way i still get to usew the llm in production kif i want to.. 
+in practice this means 
+
+"""
+ for item in aggregate_feed:
+        if use_ai:
+            print("AI flag detected. Routing data model through LLM engine...")
+
+            #convert the dict to a string so the llm can read it
+            data_string = str(item)     
+            message_text = summarize_article(data_string)
+"""
+
+
+i know right, why didnt i do this in the first place, i went trhough the complexity of building the extraction and cleaning pipeline just for.... nothing??
+no, i learned.. (sobs), i learned
+
+so henceforth know that the functions :
+
+fetch_raw_link_content()
+extract_clean_prose_with_meta()
+format_cleaned_stories()
+
+are useless currently and obsolete. but tather than deleting them i wont.. because msyber in the future , i might want to use a local llm to parse the full text. there's a lost to analyze in how columnists write the news. lost of analysis to do there. analyzing systemic media tone, framing, and journalistic syntax across different global news ecosystems... there's work to do there.
+
+
+breexzed.
